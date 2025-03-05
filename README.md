@@ -1,4 +1,4 @@
-# 🏛️ Push_swap
+# 🏛️ Philosophers
 
 <p align="center">
   <img src="https://github.com/mbah24-dev/mbah24-dev/blob/main/42_badges/philosopherse.png" alt="philosophers 42 project badge"/>
