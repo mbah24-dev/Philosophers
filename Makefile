@@ -6,11 +6,11 @@
 #    By: mbah <mbah@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 00:03:00 by mbah              #+#    #+#              #
-#    Updated: 2025/03/06 00:03:01 by mbah             ###   ########.fr        #
+#    Updated: 2025/03/06 00:22:53 by mbah             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME      ?= philosophers
+NAME      ?= philo
 CC         = cc
 DIR        = src
 INC        = inc
