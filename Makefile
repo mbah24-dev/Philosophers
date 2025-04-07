@@ -3,20 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbah <mbah@student.42.fr>                  +#+  +:+       +#+         #
+#    By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 00:03:00 by mbah              #+#    #+#              #
-#    Updated: 2025/03/06 00:22:53 by mbah             ###   ########.fr        #
+#    Updated: 2025/04/07 15:42:08 by mbah             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME      ?= philo
 CC         = cc
 DIR        = src
+APP        = app
+UTILITY    = utility
+CORE       = core
 INC        = inc
 CFLAGS     = -Wall -Werror -Wextra -I $(INC)
 HEADER     = $(INC)/philosophers.h 
-SRC        = $(DIR)/main.c 
+SRC        = $(DIR)/$(APP)/$(CORE)/initializer.c $(DIR)/$(APP)/$(UTILITY)/external_func.c \
+			 $(DIR)/$(APP)/$(UTILITY)/philo_utils.c $(DIR)/$(APP)/$(CORE)/check_arguments.c \
+			 $(DIR)/$(APP)/$(CORE)/dining_simulation.c $(DIR)/main.c
 
 OBJS       = $(SRC:.c=.o)
 
