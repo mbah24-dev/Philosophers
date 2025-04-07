@@ -6,7 +6,7 @@
 /*   By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 23:07:04 by mbah              #+#    #+#             */
-/*   Updated: 2025/04/04 23:31:53 by mbah             ###   ########.fr       */
+/*   Updated: 2025/04/07 15:46:15 by mbah             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	i = 0;
 	while (str[i])
 		i++;
 	return (i);
@@ -44,4 +45,9 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res * sign);
+}
+
+size_t	time_since_last_meal(t_philo philo)
+{
+	return (get_time_now() - philo.times.time_of_last_meal);
 }

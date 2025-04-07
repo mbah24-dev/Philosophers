@@ -6,7 +6,7 @@
 /*   By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 23:36:30 by mbah              #+#    #+#             */
-/*   Updated: 2025/04/05 01:24:25 by mbah             ###   ########.fr       */
+/*   Updated: 2025/04/07 15:55:07 by mbah             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	display_action(char *action_msg, t_philo *philo)
 
 	pthread_mutex_lock(philo->mutexes.print_lock);
 	time = get_time_now() - philo->times.time_at_born;
-	printf("%ld %d %s", time, philo->id, action_msg);
+	printf("%ld %d %s\n", time, philo->id, action_msg);
 	pthread_mutex_unlock(philo->mutexes.print_lock);
 }
 
