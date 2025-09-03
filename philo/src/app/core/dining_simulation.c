@@ -6,7 +6,7 @@
 /*   By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 18:10:21 by mbah              #+#    #+#             */
-/*   Updated: 2025/04/07 17:25:40 by mbah             ###   ########.fr       */
+/*   Updated: 2025/08/30 16:44:35 by mbah             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	run_simulation_threads(t_table *table)
 	}
 	i = 0;
 	if (pthread_join(superviser, NULL) != 0)
-		clean_up(table, "Error: can\'t join de superviser", nb_philos, 1);
+		clean_up(table, "Error: can\'t join the superviser", nb_philos, 1);
 	while (i < nb_philos)
 	{
 		if (pthread_detach(table->philos[i].thread) != 0)

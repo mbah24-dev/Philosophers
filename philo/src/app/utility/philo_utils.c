@@ -6,7 +6,7 @@
 /*   By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 23:36:30 by mbah              #+#    #+#             */
-/*   Updated: 2025/04/07 15:55:07 by mbah             ###   ########.fr       */
+/*   Updated: 2025/08/30 16:01:28 by mbah             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	an_error_occured(char *err_msg, int exit_status)
 {
 	if (err_msg)
-		write(1, err_msg, ft_strlen(err_msg) + 1);
+		write(2, err_msg, ft_strlen(err_msg) + 1);
 	exit(exit_status);
 }
 
