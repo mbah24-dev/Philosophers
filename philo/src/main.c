@@ -6,12 +6,11 @@
 /*   By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 00:02:15 by mbah              #+#    #+#             */
-/*   Updated: 2025/04/07 15:49:21 by mbah             ###   ########.fr       */
+/*   Updated: 2025/09/17 15:54:10 by mbah             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philosophers.h"
-#include <stdlib.h>
+#include "philosophers.h"
 
 int	main(int argc, char **argv)
 {
