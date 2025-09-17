@@ -6,7 +6,7 @@
 /*   By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 16:04:22 by mbah              #+#    #+#             */
-/*   Updated: 2025/09/17 16:30:34 by mbah             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:41:34 by mbah             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 static void	stop_set(t_table *table, bool state)
 {
 	pthread_mutex_lock(&table->end_lock);
-	table->end_sim = state;
+	table->sim_end = state;
 	pthread_mutex_unlock(&table->end_lock);
 }
 
@@ -43,7 +43,7 @@ bool	stop_check(t_table *table)
 
 	ret = false;
 	pthread_mutex_lock(&table->end_lock);
-	if (table->end_sim == true)
+	if (table->sim_end == true)
 		ret = true;
 	pthread_mutex_unlock(&table->end_lock);
 	return (ret);
@@ -64,10 +64,10 @@ static bool	agent_dead(t_agent *agent)
 	time_t	now;
 
 	now = time_now_ms();
-	if ((now - agent->last_meal) >= agent->table->time_die)
+	if ((now - agent->last_meal) >= agent->table->tt_die)
 	{
 		stop_set(agent->table, true);
-		status_write(agent, true, DEAD);
+		log_state(agent, true, STATE_DIED);
 		pthread_mutex_unlock(&agent->last_meal_lock);
 		return (true);
 	}
@@ -96,13 +96,14 @@ static bool	end_reached(t_table *table)
 		pthread_mutex_lock(&table->agents[i]->last_meal_lock);
 		if (agent_dead(table->agents[i]))
 			return (true);
-		if (table->must_eat != -1)
-			if (table->agents[i]->meals < (unsigned int)table->must_eat)
+		if (table->meals_required != -1)
+			if (table->agents[i]->meals_eaten < \
+				(unsigned int)table->meals_required)
 				all_fed = false;
 		pthread_mutex_unlock(&table->agents[i]->last_meal_lock);
 		i++;
 	}
-	if (table->must_eat != -1 && all_fed == true)
+	if (table->meals_required != -1 && all_fed == true)
 	{
 		stop_set(table, true);
 		return (true);
@@ -124,7 +125,7 @@ void	*monitor(void *data)
 	t_table	*table;
 
 	table = (t_table *)data;
-	if (table->must_eat == 0)
+	if (table->meals_required == 0)
 		return (NULL);
 	stop_set(table, false);
 	delay_start(table->start_time);
