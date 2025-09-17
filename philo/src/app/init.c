@@ -6,7 +6,7 @@
 /*   By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 16:11:34 by mbah              #+#    #+#             */
-/*   Updated: 2025/09/17 16:44:04 by mbah             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:23:21 by mbah             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,10 @@ t_table	*table_init(int ac, char **av, int i)
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (error_nullptr(MSG_ERR_MALLOC, NULL, 0));
-	table->nb_agents = integer_atoi(av[i++]);
-	table->tt_die = integer_atoi(av[i++]);
-	table->tt_eat = integer_atoi(av[i++]);
-	table->tt_sleep = integer_atoi(av[i++]);
+	table->nb_agents = ft_atoi(av[i++]);
+	table->tt_die = ft_atoi(av[i++]);
+	table->tt_eat = ft_atoi(av[i++]);
+	table->tt_sleep = ft_atoi(av[i++]);
 	table->meals_required = -1;
 	if (ac - 1 == 5)
 		table->meals_required = ft_atoi(av[i]);
