@@ -6,7 +6,7 @@
 /*   By: mbah <mbah@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 00:02:55 by mbah              #+#    #+#             */
-/*   Updated: 2025/04/07 17:00:13 by mbah             ###   ########.fr       */
+/*   Updated: 2025/09/17 15:44:27 by mbah             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,55 +18,78 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <limits.h>
+# include <stdbool.h>
 
-# define PHILO_MAX_NUMBER	200
-# define MAX_OF_INT			2147483647
+# define MAX_PHILO_NUM        250
+# define MAX_INT              2147483647
+# define MAX_PHILO_STR        "250"
 
-/******************** (TYPES) ********************/
+# define COLOR_RESET          "\e[0m"
+# define COLOR_RED            "\e[31m"
+# define COLOR_GREEN          "\e[32m"
+# define COLOR_PURPLE         "\e[35m"
+# define COLOR_CYAN           "\e[36m"
+
+# define MSG_PROG_NAME        "philo:"
+# define MSG_USAGE            "%s usage: ./philo <number_of_philosophers> \
+<time_to_die> <time_to_eat> <time_to_sleep> \
+[number_of_times_each_philosopher_must_eat]\n"
+# define MSG_ERR_INPUT_DIGIT  "%s invalid input: %s: \
+not a valid unsigned integer between 0 and 2147483647.\n"
+# define MSG_ERR_INPUT_RANGE  "%s invalid input: \
+there must be between 1 and %s philosophers.\n"
+# define MSG_ERR_THREAD       "%s Error: Could not create thread.\n"
+# define MSG_ERR_MALLOC       "%s Error: Could not allocate memory.\n"
+# define MSG_ERR_MUTEX        "%s Error: Could not create mutex.\n"
+
+/* ******************** (ALIASES) ******************** */
 
 typedef pthread_t		t_thread;
-typedef pthread_mutex_t	t_mutex;
+typedef pthread_mutex_t	t_lock;
 typedef struct timeval	t_timeval;
+typedef struct s_agent	t_agent;
 
-/******************************************************
-*                  STRUCTS DEFINITION                 *
-*******************************************************/
-
-typedef struct s_mutexes
-{
-	t_mutex	*left_fork;
-	t_mutex	*right_fork;
-	t_mutex	*print_lock;
-	t_mutex	*meal_lock;
-}			t_mutexes;
-
-typedef struct s_times
-{
-	size_t	time_to_eat;
-	size_t	time_to_sleep;
-	size_t	time_to_die;
-	size_t	time_of_last_meal;
-	size_t	time_at_born;
-}			t_times;
-
-typedef struct philo
-{
-	t_mutexes	mutexes;
-	t_times		times;
-	t_thread	thread;
-	int			id;
-	int			meals_eat;
-	int			philo_nb;
-	int			must_eat;
-}				t_philo;
+/* **************************************************** */
+/*                  STRUCT DEFINITIONS                  */
+/* **************************************************** */
 
 typedef struct s_table
 {
-	t_mutex	*forks;
-	t_philo	*philos;
-	t_mutex	print_lock;
-	t_mutex	meal_lock;
-}			t_table;
+	time_t			start_time;
+	unsigned int	nb_agents;
+	t_thread		reaper;
+	time_t			tt_die;
+	time_t			tt_eat;
+	time_t			tt_sleep;
+	int				meals_required;
+	bool			sim_end;
+	t_lock			end_lock;
+	t_lock			print_lock;
+	t_lock			*forks;
+	t_agent			**agents;
+}					t_table;
+
+typedef struct s_agent
+{
+	t_thread		thread;
+	unsigned int	meals_eaten;
+	unsigned int	fork[2];
+	unsigned int	id;
+	t_lock			last_meal_lock;
+	time_t			last_meal;
+	t_table			*table;
+}					t_agent;
+
+typedef enum e_state
+{
+	STATE_DIED = 0,
+	STATE_EAT = 1,
+	STATE_SLEEP = 2,
+	STATE_THINK = 3,
+	STATE_FORK1 = 4,
+	STATE_FORK2 = 5
+}	t_state;
 
 /******************************************************
 *            INITIALIZE TABLE, PHILOS AND FORKS       *
