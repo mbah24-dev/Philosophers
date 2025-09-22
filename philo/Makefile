@@ -18,7 +18,7 @@ APP        = app
 UTILITY    = utility
 CORE       = core
 INC        = inc
-CFLAGS     = -Wall -Werror -Wextra -fsanitize=address -g -I $(INC)
+CFLAGS     = -Wall -Werror -Wextra -I $(INC)
 HEADER     = $(INC)/philosophers.h
 SRC        = src/main.c $(DIR)/cleanup.c $(DIR)/monitor.c $(DIR)/init.c \
 			$(DIR)/status.c $(DIR)/parsing.c $(DIR)/philosopher_routine.c \
